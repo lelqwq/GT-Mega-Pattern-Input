@@ -10,6 +10,7 @@ import com.lelqwq.gtmpi.common.api.enums.GTMPIItemList;
 import com.lelqwq.gtmpi.loader.MachineLoader;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gregtech.api.GregTechAPI;
 
@@ -51,5 +52,12 @@ public class GTMegaPatternInput {
 
         GregTechAPI.sAfterGTPreload.add(MachineLoader::registerMachines);
         LOG.info("已把机器注册任务加入 GregTechAPI.sAfterGTPreload 队列（MTE ID 基准 18000）。");
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        // 原版工作台配方：本 mod 方块（sAfterGTPreload 已注册）、AE2 方块（required-after 保证先 init）、
+        // ae2fc 方块（preInit 注册）此时均已就绪
+        MachineLoader.registerRecipes();
     }
 }
