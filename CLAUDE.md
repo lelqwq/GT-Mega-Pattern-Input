@@ -45,3 +45,4 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 - ⑬ v0.3.0 接口终端修复（登记 `InterfaceTerminalRegistry` + `rows()=16`/`rowSize()=8` 适配 174px 视口），**已实机验证通过**，已本地提交
 - ⑭ v0.4.0 工作台配方 ×3（总线 = LV 输入总线 + ME 接口；总成 = LV 输入总线 + LV 输入仓 + ME 二合一接口（ae2fc 流体接口方块 `ItemAndBlockHolder.INTERFACE`）；镜像 = 巨型总成 + 原版玻璃），**已实机验证通过**，已本地提交
 - ⑮ v0.5.0 tooltip 中文本地化 + 等级行改 LV（构造函数 `TIER_COLORS[1]+VN[1]`），**已实机验证通过**，已本地提交
+- ⑯ v1.0.0 正式发布：推送 GitHub（lelqwq/GT-Mega-Pattern-Input，main 分支）+ Release 附带 jar
