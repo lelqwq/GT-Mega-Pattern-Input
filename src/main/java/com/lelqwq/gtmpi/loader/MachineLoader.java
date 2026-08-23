@@ -1,0 +1,56 @@
+package com.lelqwq.gtmpi.loader;
+
+import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Input_Buffer;
+import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Input_Bus;
+import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Input_Proxy;
+
+import com.lelqwq.gtmpi.GTMegaPatternInput;
+import com.lelqwq.gtmpi.common.api.enums.MetaTileEntityID;
+import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputME;
+import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputSlave;
+
+/**
+ * 机器加载器：在 GT preInit 末尾（{@code GregTechAPI.sAfterGTPreload}）执行。
+ *
+ * <p>
+ * 注册三个新方块（复刻原版样板输入仓、样板槽扩容为 8×16）：
+ * <ul>
+ * <li>巨型样板输入总线（物品，Tier 6，对应原版 Crafting Input Bus (ME)）</li>
+ * <li>巨型样板输入总成（防水/流体样板，Tier 10，对应原版 Crafting Input Buffer (ME)）</li>
+ * <li>巨型样板输入镜像（Tier 11，对应原版 Crafting Input Proxy，连接本 mod 的总成）</li>
+ * </ul>
+ */
+public final class MachineLoader {
+
+    private MachineLoader() {}
+
+    public static void registerMachines() {
+        GTMegaPatternInput.LOG.info("开始注册 GT Mega Pattern Input 机器...");
+
+        Mega_Crafting_Input_Bus.set(
+            new MTEHatchCraftingInputME(
+                MetaTileEntityID.MEGA_CRAFTING_INPUT_BUS.ID,
+                "gtmpi.hatch.crafting_input.mega.bus",
+                "Mega Crafting Input Bus (ME)",
+                false).getStackForm(1L));
+
+        Mega_Crafting_Input_Buffer.set(
+            new MTEHatchCraftingInputME(
+                MetaTileEntityID.MEGA_CRAFTING_INPUT_BUFFER.ID,
+                "gtmpi.hatch.crafting_input.mega.buffer",
+                "Mega Crafting Input Buffer (ME)",
+                true).getStackForm(1L));
+
+        Mega_Crafting_Input_Proxy.set(
+            new MTEHatchCraftingInputSlave(
+                MetaTileEntityID.MEGA_CRAFTING_INPUT_PROXY.ID,
+                "gtmpi.hatch.crafting_input.mega.proxy",
+                "Mega Crafting Input Proxy (ME)").getStackForm(1L));
+
+        GTMegaPatternInput.LOG.info(
+            "机器注册完成：bus={}, buffer={}, proxy={}。",
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_BUS.ID,
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_BUFFER.ID,
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_PROXY.ID);
+    }
+}

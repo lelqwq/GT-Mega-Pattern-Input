@@ -1,0 +1,30 @@
+/*
+ * 依赖说明：本 mod 是 GT5U 附加模组，编译期引用 GT5U 本体（MTEHatchInputBus 等）、
+ * AE2 API（ICraftingPatternItem 等）、ModularUI 1（样板仓 GUI）、GTNHLib、StructureLib。
+ * 版本均取自 GTNH 2.8.4 实机 mods 目录。
+ */
+dependencies {
+    // GTNH 2.8.4 对应版本（实机 gregtech-5.09.51.482.jar）
+    api("com.github.GTNewHorizons:GT5-Unofficial:5.09.51.482") { transitive = false }
+    // 实机 appliedenergistics2-rv3-beta-695-GTNH.jar
+    api("com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-695-GTNH:dev") { transitive = false }
+    // 实机 modularui-1.2.20.jar（482 的样板输入仓 GUI 使用 MUI1）
+    api("com.github.GTNewHorizons:ModularUI:1.2.20:dev") { transitive = false }
+    // 实机 modularui2-2.2.18-1.7.10.jar（GT5U 482 的 MetaTileEntity 基类携带 MUI2 inventoryHandler）
+    api("com.github.GTNewHorizons:ModularUI2:2.2.18-1.7.10:dev") { transitive = false }
+    // 实机 gtnhlib-0.7.10.jar
+    api("com.github.GTNewHorizons:GTNHLib:0.7.10:dev") { transitive = false }
+    // 实机 structurelib-1.4.23.jar
+    api("com.github.GTNewHorizons:StructureLib:1.4.23:dev") { transitive = false }
+
+    // 仅编译期：IC2 API（GT 类层次引用）
+    compileOnly("net.industrial-craft:industrialcraft-2:2.2.828-experimental:api") { transitive = false }
+    // 仅编译期：jetbrains 注解（@NotNull 等）
+    compileOnly("org.jetbrains:annotations:24.0.0")
+    // 仅编译期：WAILA（复制的仓室类实现 IWailaDataProvider）
+    compileOnly("com.github.GTNewHorizons:waila:1.19.30:dev") { transitive = false }
+
+    // ae2fc（流体样板 ItemFluidDrop/ItemFluidPacket）：未发布 Maven，用实机 jar 本地反混淆后编译。
+    // 运行时由玩家实例自带的 ae2fc 提供（GT5U 482 本体同样硬依赖 ae2fc）。
+    devOnlyNonPublishable(rfg.deobf(project.files("libs/ae2fc-1.4.120-gtnh.jar")))
+}

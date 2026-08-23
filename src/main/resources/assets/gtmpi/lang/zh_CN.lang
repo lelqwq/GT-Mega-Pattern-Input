@@ -1,0 +1,4 @@
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.bus.name=巨型样板输入总线（ME）
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.buffer.name=巨型样板输入总成（ME）
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.proxy.name=巨型样板输入镜像（ME）
+itemGroup.gtmpi=GT Mega Pattern Input

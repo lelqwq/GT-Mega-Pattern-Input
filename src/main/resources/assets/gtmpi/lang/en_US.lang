@@ -1,0 +1,4 @@
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.bus.name=Mega Crafting Input Bus (ME)
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.buffer.name=Mega Crafting Input Buffer (ME)
+gt.blockmachines.gtmpi.hatch.crafting_input.mega.proxy.name=Mega Crafting Input Proxy (ME)
+itemGroup.gtmpi=GT Mega Pattern Input
