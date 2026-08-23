@@ -846,7 +846,7 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
 
     @Override
     public int getCircuitSlotX() {
-        return 170;
+        return 296;
     }
 
     @Override
@@ -862,6 +862,12 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
     @Override
     public int getGUIWidth() {
         return super.getGUIWidth() + 142;
+    }
+
+    @Override
+    public int getGUIHeight() {
+        // 8 行格子比原版 4 行高 72px；玩家背包由基类按 (高度-83) 摆放，需同步加高
+        return super.getGUIHeight() + 72;
     }
 
     @Override
@@ -899,7 +905,7 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
                 .addTooltip(
                     StatCollector.translateToLocal("GT5U.gui.tooltip.hatch.crafting_input_me.place_manual_items"))
                 .setSize(16, 16)
-                .setPos(170, 46))
+                .setPos(296, 46))
             .widget(new ButtonWidget().setOnClick((clickData, widget) -> {
                 if (clickData.mouseButton == 0) {
                     refundAll(false);
@@ -909,7 +915,7 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
                 .setBackground(GTUITextures.BUTTON_STANDARD, GTUITextures.OVERLAY_BUTTON_EXPORT)
                 .addTooltip(StatCollector.translateToLocal("GT5U.gui.tooltip.hatch.crafting_input_me.export"))
                 .setSize(16, 16)
-                .setPos(170, 28))
+                .setPos(296, 28))
             .widget(
                 new CycleButtonWidget()
                     .setToggle(() -> disablePatternOptimization, val -> disablePatternOptimization = val)
@@ -917,7 +923,7 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
                     .setVariableBackground(GTUITextures.BUTTON_STANDARD_TOGGLE)
                     .addTooltip(0, "Pattern Optimization:\n§7Allowed")
                     .addTooltip(1, "Pattern Optimization:\n§7Disabled")
-                    .setPos(170, 10)
+                    .setPos(296, 10)
                     .setSize(16, 16))
             .widget(new ButtonWidget().setOnClick((clickData, widget) -> {
                 int val = clickData.shift ? 1 : 0;
@@ -928,7 +934,7 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
                 .setBackground(GTUITextures.BUTTON_STANDARD, GTUITextures.OVERLAY_BUTTON_X2)
                 .addTooltip(StatCollector.translateToLocal("gui.tooltips.appliedenergistics2.DoublePatterns"))
                 .setSize(16, 16)
-                .setPos(194, 10));
+                .setPos(320, 10));
     }
 
     @Override

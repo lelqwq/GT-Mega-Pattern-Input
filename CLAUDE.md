@@ -4,7 +4,7 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 
 ## 一句话原理
 
-不 fork GT5U：把 GT5U 5.09.51.482 的 `MTEHatchCraftingInputME`（主仓）与 `MTEHatchCraftingInputSlave`（镜像）复制到本 mod 包内，改 `MAX_PATTERN_COUNT = 8*16` + `rows()/rowSize()` + GUI 每行 16 槽 + `getGUIWidth()+142`。机器通过 `GregTechAPI.sAfterGTPreload` 队列在 GT preInit 末尾注册（`required-before:gregtech` 保证时序，参考 gtswn/GigaGramFab 模式）。
+不 fork GT5U：把 GT5U 5.09.51.482 的 `MTEHatchCraftingInputME`（主仓）与 `MTEHatchCraftingInputSlave`（镜像）复制到本 mod 包内，改 `MAX_PATTERN_COUNT = 8*16` + `rows()/rowSize()` + GUI 每行 16 槽 + `getGUIWidth()+142`/`getGUIHeight()+72` + 按钮与电路板槽右移 126。机器通过 `GregTechAPI.sAfterGTPreload` 队列在 GT preInit 末尾注册（`required-before:gregtech` 保证时序，参考 gtswn/GigaGramFab 模式）。
 
 ## 核心决策
 
@@ -20,6 +20,7 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 - **同包引用不带 import**：复制 GT 类换包后，原同包的 `IDualInputHatch/IDualInputHatchWithPattern/IDualInputInventory/IDualInputInventoryWithPattern` 引用全部失效（症状是"找不到符号"+@Override 级联报错）——需手动补 `gregtech.common.tileentities.machines.*` import
 - **编译期常量**：`MAX_PATTERN_COUNT = 4*9` 被内联，改它必须改源码重编译（这正是本 mod 选择复制类而不是 mixin 的原因）
 - 纹理零成本：`getTexturesInactive` 使用 `OVERLAY_ME_CRAFTING_INPUT_BUFFER/BUS/SLAVE` 覆盖贴图，纹理本体在 gregtech jar 内，运行时直接可用
+- **GUI 尺寸必须宽高联动**：MUI1 玩家背包由 GT 基类固定摆在 `(宽/2-81, 高-83)`，只加宽不加高会让 8 行格子盖住背包（症状：格子压住背包栏）；按钮/电路板槽 x=170/194 是原版 192 宽窗口的右栏绝对坐标，加宽后必须同步右移（170→296、194→320、电路板槽 170→296；原版 ×2 按钮本就悬出窗口右缘 18px，MUI1 不裁剪普通 widget，1:1 复刻）
 
 ## 构建
 
@@ -33,8 +34,9 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 
 ## 当前状态（2026-08-23）
 
-- ⑪ v0.1.0 初版已构建（jar 内容已验证：mcmod.info/双语 lang/两个仓室类齐全），**待实机测试**：
-  - 服务端+客户端放入 jar，创造栏取三个方块
-  - 放入支持样板输入仓的多方块（精密装配器/TecTech 多方块），GUI 应显示 8×16
+- ⑪ v0.1.0 初版已构建（jar 内容已验证：mcmod.info/双语 lang/两个仓室类齐全）
+- ⑫ v0.2.0 GUI 布局修复（getGUIHeight+72 / 按钮与电路板槽右移 126），**已实机验证通过**，已本地提交
+- **待实机测试**：
   - 编码样板 → ME 网络识别；镜像闪存连接总成；流体样板（防水版）；存档重启保留
   - 与 gtpoc/gtneioc/gtswn 共存测试（ID 18000 段 + 14620 无冲突）
+- **已知问题**：巨型样板输入总成接入 AE 网络后在接口终端中不显示（原版可见），待查
