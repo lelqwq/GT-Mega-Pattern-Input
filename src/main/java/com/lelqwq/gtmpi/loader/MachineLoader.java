@@ -4,8 +4,12 @@ import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Inpu
 import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Input_Bus;
 import static com.lelqwq.gtmpi.common.api.enums.GTMPIItemList.Mega_Crafting_Input_Proxy;
 
+import java.io.File;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 
 import com.glodblock.github.loader.ItemAndBlockHolder;
 import com.lelqwq.gtmpi.GTMegaPatternInput;
@@ -14,6 +18,7 @@ import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputME;
 import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputSlave;
 
 import appeng.api.AEApi;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.ItemList;
 
@@ -113,5 +118,52 @@ public final class MachineLoader {
             new ItemStack(Blocks.glass));
 
         GTMegaPatternInput.LOG.info("巨型样板输入三配方注册完成。");
+    }
+
+    /**
+     * GT5U 的 tooltip 本地化不读 assets lang，只读游戏根目录的 GregTech(_locale).lang
+     * （{@code GTPreLoad.initLocalization} 在 GT preInit 读取；本 mod required-before:gregtech，
+     * 本方法先于它执行）。中文客户端把中文描述键强制写入（覆盖旧值），en_US/服务端
+     * 无需写入——GT 会用描述数组的英文自动生成默认条目。
+     */
+    public static void registerLocalizations(File gameDir) {
+        if (FMLCommonHandler.instance()
+            .getEffectiveSide()
+            .isServer()) return;
+        String langCode = Minecraft.getMinecraft()
+            .getLanguageManager()
+            .getCurrentLanguage()
+            .getLanguageCode();
+        if (!langCode.startsWith("zh_")) return;
+
+        File langFile = new File(gameDir, "GregTech_" + langCode + ".lang");
+        Configuration langConfig = new Configuration(langFile);
+        langConfig.load();
+
+        putDescriptions(
+            langConfig,
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_BUS.ID,
+            new String[] { "用于多方块结构的高级物品输入", "等级：§7LV", "直接从 ME 网络处理样板", "不支持包含流体的样板", "使用剪线钳右键可改变 ME 连接方式",
+                "忽略其他总线或仓室的内容", "同时忽略同一总线内的其他样板" });
+        putDescriptions(
+            langConfig,
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_BUFFER.ID,
+            new String[] { "用于多方块结构的高级物品输入", "等级：§7LV", "直接从 ME 网络处理样板", "支持包含流体的样板", "使用剪线钳右键可改变 ME 连接方式",
+                "忽略其他总线或仓室的内容", "同时忽略同一总线内的其他样板" });
+        putDescriptions(
+            langConfig,
+            MetaTileEntityID.MEGA_CRAFTING_INPUT_PROXY.ID,
+            new String[] { "样板输入总线/总成的镜像", "等级：§7LV", "使用数据棒连接样板输入总线/总成以共享物品栏", "手持数据棒左键点击样板输入总线/总成，再右键点击本方块进行连接" });
+
+        langConfig.save();
+        GTMegaPatternInput.LOG.info("已把巨型样板输入三机器的中文 tooltip 描述写入 {}。", langFile.getName());
+    }
+
+    private static void putDescriptions(Configuration langConfig, int mteId, String[] lines) {
+        for (int i = 0; i < lines.length; i++) {
+            String key = String.format("TileEntity_DESCRIPTION_%05d_Index_%02d", mteId, i);
+            langConfig.get("LanguageFile", key, lines[i])
+                .set(lines[i]);
+        }
     }
 }

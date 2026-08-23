@@ -50,6 +50,11 @@ public class GTMegaPatternInput {
     public void preInit(FMLPreInitializationEvent event) {
         Config.load(event.getSuggestedConfigurationFile());
 
+        // GT tooltip 本地化：必须在 GT preInit 读取 GregTech(_locale).lang 之前写入
+        MachineLoader.registerLocalizations(
+            event.getModConfigurationDirectory()
+                .getParentFile());
+
         GregTechAPI.sAfterGTPreload.add(MachineLoader::registerMachines);
         LOG.info("已把机器注册任务加入 GregTechAPI.sAfterGTPreload 队列（MTE ID 基准 18000）。");
     }

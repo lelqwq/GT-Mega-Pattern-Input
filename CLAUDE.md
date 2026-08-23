@@ -23,6 +23,7 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 - **GUI 尺寸必须宽高联动**：MUI1 玩家背包由 GT 基类固定摆在 `(宽/2-81, 高-83)`，只加宽不加高会让 8 行格子盖住背包（症状：格子压住背包栏）；按钮/电路板槽 x=170/194 是原版 192 宽窗口的右栏绝对坐标，加宽后必须同步右移（170→296、194→320、电路板槽 170→296；原版 ×2 按钮本就悬出窗口右缘 18px，MUI1 不裁剪普通 widget，1:1 复刻）
 - **AE2 接口终端是白名单制**：`ContainerInterfaceTerminal` 只遍历 `InterfaceTerminalRegistry.getSupportedClasses()`；GT5U 在 `AE2Compat.onPreInit()` 只登记原版仓类，复制类必须自己调 `AEApi.instance().registries().interfaceTerminal().register(本类.class)` 才能在接口终端显示（镜像类无 ME 节点，原版也不登记）
 - **接口终端视口宽 174px 且无横向滚动**：终端条目按 `IInterfaceViewable.rows()/rowSize()` 排版（这是这两个方法的唯一消费方，本机 GUI 每行 16 槽由 SlotGroup 硬编码，互不影响）。16 列一行 288px 会被左右裁剪，因此 `rows()=16`、`rowSize()=8`（144px 完整显示，靠终端纵向滚动条查看）
+- **tooltip 本地化不读 assets lang**：GT5U 的 `TileEntity_DESCRIPTION_<MTE-ID>_Index_NN` 翻译只从游戏根目录的 `GregTech.lang`/`GregTech_<locale>.lang` 读取（`GTPreLoad.initLocalization`，GT preInit 时加载；文件里无键时把描述数组英文写进文件作默认）。做法：本 mod 在 preInit（先于 GT，required-before 保证）用 `Configuration` 强制覆盖写入自己的 18 个键（`Property.set` 才能清掉历史残留），键按实际 MTE ID 生成（兼容 metaIdOffset）
 
 ## 构建
 
@@ -43,3 +44,4 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
   - 与 gtpoc/gtneioc/gtswn 共存测试（ID 18000 段 + 14620 无冲突）
 - ⑬ v0.3.0 接口终端修复（登记 `InterfaceTerminalRegistry` + `rows()=16`/`rowSize()=8` 适配 174px 视口），**已实机验证通过**，已本地提交
 - ⑭ v0.4.0 工作台配方 ×3（总线 = LV 输入总线 + ME 接口；总成 = LV 输入总线 + LV 输入仓 + ME 二合一接口（ae2fc 流体接口方块 `ItemAndBlockHolder.INTERFACE`）；镜像 = 巨型总成 + 原版玻璃），**已实机验证通过**，已本地提交
+- ⑮ v0.5.0 tooltip 中文本地化 + 等级行改 LV（构造函数 `TIER_COLORS[1]+VN[1]`），**已实机验证通过**，已本地提交
