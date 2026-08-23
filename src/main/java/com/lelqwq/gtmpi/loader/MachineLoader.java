@@ -9,6 +9,8 @@ import com.lelqwq.gtmpi.common.api.enums.MetaTileEntityID;
 import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputME;
 import com.lelqwq.gtmpi.machine.MTEHatchCraftingInputSlave;
 
+import appeng.api.AEApi;
+
 /**
  * 机器加载器：在 GT preInit 末尾（{@code GregTechAPI.sAfterGTPreload}）执行。
  *
@@ -46,6 +48,13 @@ public final class MachineLoader {
                 MetaTileEntityID.MEGA_CRAFTING_INPUT_PROXY.ID,
                 "gtmpi.hatch.crafting_input.mega.proxy",
                 "Mega Crafting Input Proxy (ME)").getStackForm(1L));
+
+        // AE2 接口终端白名单制：GT5U 只把原版仓类登记进 InterfaceTerminalRegistry，
+        // 本 mod 的仓类需自行登记才能在接口终端中显示（镜像类无 ME 节点，与原版一致不登记）
+        AEApi.instance()
+            .registries()
+            .interfaceTerminal()
+            .register(MTEHatchCraftingInputME.class);
 
         GTMegaPatternInput.LOG.info(
             "机器注册完成：bus={}, buffer={}, proxy={}。",

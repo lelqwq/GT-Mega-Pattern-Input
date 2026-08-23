@@ -625,12 +625,15 @@ public class MTEHatchCraftingInputME extends MTEHatchInputBus
 
     @Override
     public int rows() {
-        return 8;
+        // AE2 接口终端视口宽 174px（按原版 9 列设计）且无横向滚动，
+        // 16 列一行会被左右裁剪；拆成 8 列 × 16 行（144px）即可完整显示。
+        // 仅接口终端消费这两个值，本机 GUI 每行 16 槽由 addUIWidgets 硬编码，不受影响
+        return 16;
     }
 
     @Override
     public int rowSize() {
-        return 16;
+        return 8;
     }
 
     @Override

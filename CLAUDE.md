@@ -21,6 +21,8 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 - **编译期常量**：`MAX_PATTERN_COUNT = 4*9` 被内联，改它必须改源码重编译（这正是本 mod 选择复制类而不是 mixin 的原因）
 - 纹理零成本：`getTexturesInactive` 使用 `OVERLAY_ME_CRAFTING_INPUT_BUFFER/BUS/SLAVE` 覆盖贴图，纹理本体在 gregtech jar 内，运行时直接可用
 - **GUI 尺寸必须宽高联动**：MUI1 玩家背包由 GT 基类固定摆在 `(宽/2-81, 高-83)`，只加宽不加高会让 8 行格子盖住背包（症状：格子压住背包栏）；按钮/电路板槽 x=170/194 是原版 192 宽窗口的右栏绝对坐标，加宽后必须同步右移（170→296、194→320、电路板槽 170→296；原版 ×2 按钮本就悬出窗口右缘 18px，MUI1 不裁剪普通 widget，1:1 复刻）
+- **AE2 接口终端是白名单制**：`ContainerInterfaceTerminal` 只遍历 `InterfaceTerminalRegistry.getSupportedClasses()`；GT5U 在 `AE2Compat.onPreInit()` 只登记原版仓类，复制类必须自己调 `AEApi.instance().registries().interfaceTerminal().register(本类.class)` 才能在接口终端显示（镜像类无 ME 节点，原版也不登记）
+- **接口终端视口宽 174px 且无横向滚动**：终端条目按 `IInterfaceViewable.rows()/rowSize()` 排版（这是这两个方法的唯一消费方，本机 GUI 每行 16 槽由 SlotGroup 硬编码，互不影响）。16 列一行 288px 会被左右裁剪，因此 `rows()=16`、`rowSize()=8`（144px 完整显示，靠终端纵向滚动条查看）
 
 ## 构建
 
@@ -39,4 +41,4 @@ GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板�
 - **待实机测试**：
   - 编码样板 → ME 网络识别；镜像闪存连接总成；流体样板（防水版）；存档重启保留
   - 与 gtpoc/gtneioc/gtswn 共存测试（ID 18000 段 + 14620 无冲突）
-- **已知问题**：巨型样板输入总成接入 AE 网络后在接口终端中不显示（原版可见），待查
+- ⑬ v0.3.0 接口终端修复（登记 `InterfaceTerminalRegistry` + `rows()=16`/`rowSize()=8` 适配 174px 视口），**已实机验证通过**，已本地提交
