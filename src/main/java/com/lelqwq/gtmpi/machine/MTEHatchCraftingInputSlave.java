@@ -175,7 +175,10 @@ public class MTEHatchCraftingInputSlave extends MTEHatchInputBus implements IDua
         return getMaster() != null ? getMaster().getSharedItems() : GTValues.emptyItemStackArray;
     }
 
-    @Override
+    public void notifyMasterChanged() {
+        notifyWatchers();
+    }
+
     public boolean justUpdated() {
         return getMaster() != null && getMaster().justUpdated();
     }
@@ -324,7 +327,6 @@ public class MTEHatchCraftingInputSlave extends MTEHatchInputBus implements IDua
         return getMaster() != null ? getMaster().getItemsForHoloGlasses() : null;
     }
 
-    @Override
     public void setProcessingLogic(ProcessingLogic pl) {
         if (getMaster() != null) getMaster().setProcessingLogic(pl);
     }
