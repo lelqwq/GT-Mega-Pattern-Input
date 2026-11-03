@@ -63,7 +63,8 @@ public final class NativeMixinApplyTest {
         transform.setAccessible(true);
         String[] targets = args.length == 0
             ? new String[] { "gregtech.common.tileentities.machines.MTEHatchCraftingInputME",
-                "gregtech.common.tileentities.machines.MTEHatchCraftingInputSlave" }
+                "gregtech.common.tileentities.machines.MTEHatchCraftingInputSlave",
+                "gregtech.common.gui.modularui.hatch.MTEHatchCraftingInputMEGui" }
             : new String[] { "gregtech.common.gui.modularui.hatch.MTEHatchCraftingInputMEGui" };
         for (String target : targets) {
             try (InputStream input = Launch.classLoader.getResourceAsStream(target.replace('.', '/') + ".class")) {

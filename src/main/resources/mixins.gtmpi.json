@@ -5,7 +5,12 @@
   "refmap": "mixins.gtmpi.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "mixins": ["MixinCraftingInputCapacity", "MixinCraftingInputProxy"],
-  "client": ["MixinCraftingInputGui"],
-  "injectors": {"defaultRequire": 1}
+  "mixins": [
+    "MixinCraftingInputCapacity",
+    "MixinCraftingInputProxy",
+    "MixinCraftingInputGui"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

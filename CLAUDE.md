@@ -1,3 +1,7 @@
+## 1.1.1 补丁（2026-11-04）
+
+MUI2 界面也在独立服务端构建容器。MixinCraftingInputGui 必须放在 common mixins 组，不能放 client 组，否则客户端 128 样板槽、服务端 36 样板槽，点击大编号槽会导致 IndexOutOfBoundsException。SERVER 环境的 NativeMixinApplyTest 已加入原版 GUI 类；先复现旧配置失败，再验证修复通过。1.1.1 沿用本次用户授权的 GitHub 发布流程，实机测试尚待完成。
+
 ## 当前实现（2026-11-03，1.1.0）
 
 目标为 GTNH 2.9.0 / GT5U 5.09.54.265。巨型主仓继承原版 MTEHatchCraftingInputME；巨型镜像直接注册原版 MTEHatchCraftingInputSlave。Mixin 仅按内部机器名称扩展容量和 GUI，以及隔离原版/巨型镜像链接。保留 128 槽、9 个共享槽、原有 MTE ID/偏移及三条巨型获取配方。移除了复制的加工代码和强制写 LV 说明。详细变更与存档验证清单见 RELEASE-1.1.0.md。
