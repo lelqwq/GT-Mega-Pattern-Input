@@ -1,3 +1,11 @@
+## 当前实现（2026-11-03，1.1.0）
+
+目标为 GTNH 2.9.0 / GT5U 5.09.54.265。巨型主仓继承原版 MTEHatchCraftingInputME；巨型镜像直接注册原版 MTEHatchCraftingInputSlave。Mixin 仅按内部机器名称扩展容量和 GUI，以及隔离原版/巨型镜像链接。保留 128 槽、9 个共享槽、原有 MTE ID/偏移及三条巨型获取配方。移除了复制的加工代码和强制写 LV 说明。详细变更与存档验证清单见 RELEASE-1.1.0.md。
+
+构建：./gradlew build --offline --no-configuration-cache；check 包含 verifyNativeReuse、verifyNativeMixinServer、verifyNativeMixinClient。可用 -PgtmpiRuntimeGtJar=<实际游戏GT.jar> 同时验证最终重混淆发布包。离线检查通过。1.1.0 根据用户本次明确指示在实机测试前提交并发布；其余版本仍遵循原有实机验证约定。
+
+以下为旧版实现的历史记录，涉及复制类、MUI1 和 2.8.4 的说明不代表当前架构。
+
 # GT-Mega-Pattern-Input — 项目备忘录
 
 GTNH 2.8.4 专用 GT 附加模组：新增 **8×16（128 格）** 巨型样板输入总线/总成/镜像，解决原版样板输入仓 4×9（36 格）容量不足。modid `gtmpi`，作者 lelqwq。

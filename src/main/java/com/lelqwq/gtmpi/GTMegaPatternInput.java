@@ -15,7 +15,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gregtech.api.GregTechAPI;
 
 /**
- * GT Mega Pattern Input —— GTNH 2.8.4 专用 GT 附加模组。
+ * GT Mega Pattern Input —— GTNH 2.9.0 专用 GT 附加模组。
  *
  * <p>
  * 新增 8×16（128 格）巨型样板输入总线/总成/镜像，解决原版样板输入仓 4×9（36 格）容量不足的问题。
@@ -49,11 +49,6 @@ public class GTMegaPatternInput {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         Config.load(event.getSuggestedConfigurationFile());
-
-        // GT tooltip 本地化：必须在 GT preInit 读取 GregTech(_locale).lang 之前写入
-        MachineLoader.registerLocalizations(
-            event.getModConfigurationDirectory()
-                .getParentFile());
 
         GregTechAPI.sAfterGTPreload.add(MachineLoader::registerMachines);
         LOG.info("已把机器注册任务加入 GregTechAPI.sAfterGTPreload 队列（MTE ID 基准 18000）。");
