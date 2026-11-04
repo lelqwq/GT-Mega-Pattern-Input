@@ -4,7 +4,7 @@
 		"modid": "gtmpi",
 		"name": "GT Mega Pattern Input",
 		"description": "GTNH 2.9.0 专用 GT 附加模组：新增 9×4×4 分页（144 格）巨型样板输入总线/总成/镜像。复用 GT5U 原版运行逻辑，服务端与客户端均需安装。",
-		"version": "1.1.1",
+		"version": "1.2.0",
 		"mcversion": "1.7.10",
 		"url": "",
 		"updateUrl": "",

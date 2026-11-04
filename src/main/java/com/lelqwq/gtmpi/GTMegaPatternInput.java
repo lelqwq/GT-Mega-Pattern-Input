@@ -18,7 +18,7 @@ import gregtech.api.GregTechAPI;
  * GT Mega Pattern Input —— GTNH 2.9.0 专用 GT 附加模组。
  *
  * <p>
- * 新增 8×16（128 格）巨型样板输入总线/总成/镜像，解决原版样板输入仓 4×9（36 格）容量不足的问题。
+ * 新增 4 页 × 9×4（144 格）巨型样板输入总线/总成/镜像，解决原版样板输入仓容量不足的问题。
  * 不修改 GT5U 本体：机器通过 {@code GregTechAPI.sAfterGTPreload} 队列在 GT preInit 末尾注册
  * （参考 GigaGramFab / GTSimpleWirelessNetwork 的注册模式）。
  */

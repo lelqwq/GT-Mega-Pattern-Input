@@ -31,7 +31,7 @@ import gregtech.common.modularui2.widget.builder.ItemSlotGridBuilder;
  * <p>
  * The pattern inventory is split into pages of 9 columns × 4 rows. Only one page is visible at a time; the
  * prev/next buttons and the page indicator switch pages. This keeps the panel close to the native size instead
- * of expanding it to fit all 128 slots at once.
+ * of expanding it to fit all 144 slots at once.
  */
 public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInputME> {
 
@@ -89,7 +89,7 @@ public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInpu
         final PagedWidget<?> pages = new PagedWidget<>().controller(this.pageController)
             .onPageChange(index -> this.currentPage[0] = index)
             .size(SLOT_SIZE * PATTERN_COLUMNS + 4, SLOT_SIZE * PATTERN_ROWS_PER_PAGE)
-            .pos(0, 0);
+            .horizontalCenter();
 
         for (int page = 0; page < PAGE_COUNT; page++) {
             pages.addPage(createPage(page, syncManager));
@@ -122,16 +122,15 @@ public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInpu
 
     private Flow createPageControls() {
         return Flow.row()
+            .coverChildrenWidth()
             .height(18)
             .child(createPageButton("<", this.pageController::previousPage))
-            .child(
-                new TextWidget<>(IKey.dynamic(() -> (this.currentPage[0] + 1) + "/" + PAGE_COUNT)).marginLeft(2)
-                    .marginRight(2))
+            .child(new TextWidget<>(IKey.dynamic(() -> (this.currentPage[0] + 1) + "/" + PAGE_COUNT)).width(20))
             .child(createPageButton(">", this.pageController::nextPage));
     }
 
     private ButtonWidget<?> createPageButton(String label, Runnable action) {
-        return new ButtonWidget<>().size(18, 18)
+        return new ButtonWidget<>().size(14, 18)
             .overlay(IKey.str(label))
             .onMousePressed(mouseButton -> {
                 action.run();
