@@ -26,10 +26,10 @@ public final class NativeReuseSelfTest {
         String proxy = "gtmpi.hatch.crafting_input.mega.proxy";
         String nativeName = "hatch.crafting_input.buffer";
         for (String name : new String[] { mega, "gtmpi.hatch.crafting_input.mega.bus" }) {
-            check(PatternCapacity.expand(name, 36) == 128, "128 pattern slots");
-            check(PatternCapacity.expand(name, 37) == 129, "manual inventory starts at 129");
-            check(PatternCapacity.expand(name, 45) == 137, "manual inventory ends at 137");
-            check(PatternCapacity.expand(name, 46) == 138, "138 total slots");
+            check(PatternCapacity.expand(name, 36) == 144, "144 pattern slots");
+            check(PatternCapacity.expand(name, 37) == 145, "manual inventory starts at 145");
+            check(PatternCapacity.expand(name, 45) == 153, "manual inventory ends at 153");
+            check(PatternCapacity.expand(name, 46) == 154, "154 total slots");
         }
         check(PatternCapacity.expand(nativeName, 36) == 36, "native capacity unchanged");
         check(PatternCapacity.expand(nativeName, 37) == 37, "native shared slots unchanged");
@@ -60,15 +60,7 @@ public final class NativeReuseSelfTest {
 
         ClassNode giant = read("com/lelqwq/gtmpi/machine/MTEHatchCraftingInputME");
         check(giant.superName.equals(GT + "MTEHatchCraftingInputME"), "must inherit native implementation");
-        Set<String> allowed = set(
-            "<init>",
-            "newMetaEntity",
-            "rows",
-            "rowSize",
-            "getGUIWidth",
-            "getGUIHeight",
-            "getCircuitSlotX",
-            "addUIWidgets");
+        Set<String> allowed = set("<init>", "newMetaEntity", "rows", "rowSize", "buildUI", "loadNBTData");
         for (MethodNode method : giant.methods) {
             check(
                 allowed.contains(method.name) || method.name.startsWith("lambda$"),
