@@ -1,4 +1,4 @@
-## 1.2.0（2026-11-23）
+## 1.3.0（2026-11-23）
 
 目标更新为 GTNH 2.9.1 / GT5U 5.09.54.275，不再支持 2.9.0。新增 4 参 `buildUI(..., ProxiedMteGuiData)` 覆盖：通过巨型镜像打开总成时继续使用 144 槽分页 GUI，并在右下角保留 2.9.1 新增的镜像配方顺序按钮。编译依赖对齐 2.9.1（AE2 rv3-beta-1104-GTNH、ModularUI2 2.3.96、GTNHLib 0.11.58、waila 1.19.36、ae2fc 1.6.0）；GT5U 275 已移除的 `supportsFluidScreen` / `supportsFluidIOColumn` 覆盖已删除。构建与 verifyNativeReuse / NativeMixinApply server+client 全部通过，待实机验证。
 
