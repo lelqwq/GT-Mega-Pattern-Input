@@ -11,8 +11,9 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.modularui2.ProxiedMteGui.ProxiedMteGuiData;
 
-/** All processing, inventories, persistence and AE integration are inherited from GTNH 2.9.0. */
+/** All processing, inventories, persistence and AE integration are inherited from GTNH 2.9.1. */
 @IMetaTileEntity.SkipGenerateDescription
 public class MTEHatchCraftingInputME extends gregtech.common.tileentities.machines.MTEHatchCraftingInputME {
 
@@ -33,6 +34,12 @@ public class MTEHatchCraftingInputME extends gregtech.common.tileentities.machin
     @Override
     public ModularPanel buildUI(PosGuiData data, PanelSyncManager syncManager, UISettings uiSettings) {
         return new MegaCraftingInputMEGui(this).build(data, syncManager, uiSettings);
+    }
+
+    @Override
+    public ModularPanel buildUI(PosGuiData data, PanelSyncManager syncManager, UISettings uiSettings,
+        ProxiedMteGuiData proxyData) {
+        return new MegaCraftingInputMEGui(this, proxyData).build(data, syncManager, uiSettings);
     }
 
     @Override

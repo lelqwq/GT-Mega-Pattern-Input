@@ -15,7 +15,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gregtech.api.GregTechAPI;
 
 /**
- * GT Mega Pattern Input —— GTNH 2.9.0 专用 GT 附加模组。
+ * GT Mega Pattern Input —— GTNH 2.9.1 专用 GT 附加模组。
  *
  * <p>
  * 新增 4 页 × 9×4（144 格）巨型样板输入总线/总成/镜像，解决原版样板输入仓容量不足的问题。

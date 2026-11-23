@@ -21,6 +21,8 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 
 import appeng.api.implementations.ICraftingPatternItem;
 import gregtech.api.modularui2.GTGuiTextures;
+import gregtech.api.modularui2.ProxiedMteGui.ProxiedMteGuiData;
+import gregtech.common.gui.modularui.hatch.MTEHatchCraftingInputSlaveGui;
 import gregtech.common.gui.modularui.hatch.base.MTEHatchBaseGui;
 import gregtech.common.gui.modularui.util.PatternSlot;
 import gregtech.common.modularui2.widget.builder.ItemSlotGridBuilder;
@@ -52,9 +54,15 @@ public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInpu
 
     private final PagedWidget.Controller pageController = new PagedWidget.Controller();
     private final int[] currentPage = { 0 };
+    private final ProxiedMteGuiData proxyData;
 
     public MegaCraftingInputMEGui(MTEHatchCraftingInputME machine) {
+        this(machine, null);
+    }
+
+    public MegaCraftingInputMEGui(MTEHatchCraftingInputME machine, ProxiedMteGuiData proxyData) {
         super(machine);
+        this.proxyData = proxyData;
     }
 
     @Override
@@ -65,16 +73,6 @@ public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInpu
     @Override
     protected int getBasePanelHeight() {
         return PANEL_HEIGHT;
-    }
-
-    @Override
-    protected boolean supportsFluidScreen() {
-        return false;
-    }
-
-    @Override
-    protected boolean supportsFluidIOColumn() {
-        return false;
     }
 
     @Override
@@ -146,6 +144,14 @@ public class MegaCraftingInputMEGui extends MTEHatchBaseGui<MTEHatchCraftingInpu
             .child(createExportButton())
             .child(createDoublePatternButton())
             .child(createManualItemsButton(syncManager));
+    }
+
+    @Override
+    protected Flow createBottomRightCornerFlow(ModularPanel panel, PanelSyncManager syncManager) {
+        return super.createBottomRightCornerFlow(panel, syncManager).childIf(
+            proxyData != null && proxyData.hasOrigin(),
+            () -> MTEHatchCraftingInputSlaveGui.createRecipeOrderButton(proxyData.getOriginMTE())
+                .size(SLOT_SIZE));
     }
 
     private ToggleButton createOptimizerButton() {

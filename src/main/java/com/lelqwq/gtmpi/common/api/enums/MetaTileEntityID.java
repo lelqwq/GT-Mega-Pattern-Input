@@ -7,7 +7,7 @@ import com.lelqwq.gtmpi.Config;
  *
  * <p>
  * 最终 ID = BASE (18000) + Config.metaIdOffset（配置偏移量）+ 相对 ID。
- * BASE = 18000：已对照 GT5U 5.09.51.482 全仓库唯一的 MTE ID 枚举
+ * BASE = 18000：已对照 GT5U 5.09.54.275 全仓库唯一的 MTE ID 枚举
  * （gregtech.api.enums.MetaTileEntityIDs）验证，17000–29989 区段完全空白。
  */
 public enum MetaTileEntityID {
